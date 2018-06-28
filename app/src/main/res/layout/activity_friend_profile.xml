@@ -33,7 +33,7 @@
         android:id="@+id/remove_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="248dp"
+        android:layout_marginStart="196dp"
         android:layout_marginTop="228dp"
         android:onClick="removeFriend"
         android:text="remove"

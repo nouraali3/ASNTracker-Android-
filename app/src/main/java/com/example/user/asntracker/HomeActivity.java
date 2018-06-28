@@ -17,8 +17,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        currentUser=new Driver(64,"yoya","youya@gmail.com");
+        currentUser = (Driver) getIntent().getSerializableExtra("currentUser");
     }
 
    public void showFriends(View v)
