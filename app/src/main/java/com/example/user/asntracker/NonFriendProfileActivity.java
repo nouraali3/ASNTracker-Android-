@@ -20,7 +20,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class NonFriendProfileActivity extends AppCompatActivity {
 
-    TextView driverInfoTextView;
+
     static Driver currentUser;
     static Driver profileOwner;
     Button addButton;
@@ -42,8 +42,12 @@ public class NonFriendProfileActivity extends AppCompatActivity {
 
     private void displayDriverInformation(Driver driver)
     {
-        driverInfoTextView = findViewById(R.id.driver_info_tv);
-        driverInfoTextView.setText(driver.toString());
+        TextView nonFriendNameTV = findViewById(R.id.nonFriendName_tv);
+        nonFriendNameTV.setText(profileOwner.getUserName());
+        TextView nameTV = findViewById(R.id.name2_tv);
+        TextView emailTV= findViewById(R.id.email2_tv);
+        nameTV.setText(profileOwner.getUserName());
+        emailTV.setText(profileOwner.getEmail());
     }
 
     //send connection request

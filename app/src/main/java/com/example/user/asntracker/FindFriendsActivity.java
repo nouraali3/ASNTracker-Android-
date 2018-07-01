@@ -75,7 +75,7 @@ public class FindFriendsActivity extends AppCompatActivity {
                 {
                     int matchedDriversNumber=response.getJSONObject("drivers").getInt("matchedDriversNumber");
                     matchedDriver = getDriverFromJSON(response);
-                    resultTextView.setText("Results found "+matchedDriversNumber+" "+ matchedDriver.toString());
+                    resultTextView.setText(matchedDriver.getUserName());
                 }
                 catch (JSONException e)
                 {

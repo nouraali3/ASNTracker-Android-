@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class FriendProfileActivity extends AppCompatActivity {
 
     Driver profileOwner;
     Driver currentUser;
-    TextView friendInfoTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,14 @@ public class FriendProfileActivity extends AppCompatActivity {
 
     private void displayFriendInfo(Driver profileOwner)
     {
-        friendInfoTV = findViewById(R.id.friendInfo_tv);
-        friendInfoTV.setText(profileOwner.toString());
+        TextView friendNameTV = findViewById(R.id.friendName_tv);
+        friendNameTV.setText(profileOwner.getUserName());
+        TextView emailTV = findViewById(R.id.email_tv);
+        TextView phoneTV = findViewById(R.id.phone_tv);
+        TextView statusTV = findViewById(R.id.status_tv);
+        emailTV.setText(profileOwner.getEmail());
+        phoneTV.setText(profileOwner.getPhonenumber());
+        statusTV.setText(profileOwner.getStatus());
     }
 
 
@@ -69,8 +76,8 @@ public class FriendProfileActivity extends AppCompatActivity {
                     Log.d("FriendProfileActivity","removeFriend onSuccess result is "+response.getBoolean("result"));
                     if (response.getBoolean("result")==true)
                     {
-                        Button trackBTN= findViewById(R.id.track_btn);
-                        Button removeBTN = findViewById(R.id.remove_btn);
+                        ImageButton trackBTN= findViewById(R.id.track_btn);
+                        ImageButton removeBTN = findViewById(R.id.remove_btn);
                         trackBTN.setVisibility(View.GONE);
                         removeBTN.setVisibility(View.GONE);
                     }

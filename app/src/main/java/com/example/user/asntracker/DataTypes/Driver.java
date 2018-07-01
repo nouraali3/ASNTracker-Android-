@@ -26,18 +26,8 @@ public class Driver implements Serializable
         this.email = email;
     }
 
-    public Driver(int ID, String userName, String email, String password, String phonenumber, String status, String token)
-    {
-        this.ID = ID;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.phonenumber = phonenumber;
-        this.status = status;
-        this.token = token;
-    }
 
-    public Driver(int ID, String userName, String email, String phonenumber, String status, String token)
+    public Driver(int ID, String userName, String email, String token, String phonenumber, String status)
     {
         this.ID = ID;
         this.userName = userName;
@@ -59,6 +49,22 @@ public class Driver implements Serializable
                 '}';
     }
 
+
+    public String getFormattedNonFriendInfo()
+    {
+        return
+                  "userame     :" + userName + '\'' +
+                "\nemail       :" + email  ;
+    }
+
+    public String getFormattedFriendInfo()
+    {
+        return
+                  "userame     :" + userName + '\'' +
+                "\nemail       :" + email + '\'' +
+                "\nphonenumber :" + phonenumber + '\'' +
+                "\nstatus      :" + status  ;
+    }
     public int getID() {return ID;}
     public void setID(int ID) {this.ID = ID;}
 

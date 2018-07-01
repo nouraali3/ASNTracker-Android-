@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="com.example.user.asntracker.LoginActivity">
 
     <EditText
@@ -11,8 +12,8 @@
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="208dp"
         android:background="#11000000"
         android:ems="10"
         android:hint="Email"
@@ -25,8 +26,8 @@
         android:id="@+id/password_et"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="264dp"
         android:background="#11000000"
         android:ems="10"
         android:hint="Password"
@@ -38,8 +39,8 @@
         android:id="@+id/login_btn"
         android:layout_width="249dp"
         android:layout_height="40dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="284dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="328dp"
         android:background="#80424242"
         android:onClick="login"
         android:text="Log in"
@@ -54,9 +55,54 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/login_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="340dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="380dp"
         android:text="Forget your password?"
         android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="67dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="4dp"
+        android:text="LOG IN"
+        android:textAllCaps="false"
+        android:textColor="#FF131B4C"
+        android:textSize="22sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="217dp"
+        android:layout_height="148dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="100dp" />
+        app:srcCompat="@drawable/school_bus_track" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="132dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/loc" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="140dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/loc" />
 </android.support.constraint.ConstraintLayout>

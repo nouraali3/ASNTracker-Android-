@@ -3,6 +3,7 @@ package com.example.user.asntracker;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.user.asntracker.DataTypes.Driver;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -83,8 +84,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("MapsActivity","position of friend is "+position.latitude+" "+position.longitude);
         mMap.addMarker(new MarkerOptions().position(position).title(friend.getUserName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
     }
 
+    public void refreshLocationOnMap(View v)
+    {
+        fetchAndDisplayRecentPosition();
+    }
 
     /**
      * Manipulates the map once available.
@@ -98,6 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         // Add a marker in Sydney and move the camera
     }

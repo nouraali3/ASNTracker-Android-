@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="com.example.user.asntracker.HomeActivity">
 
 
@@ -11,8 +12,8 @@
         android:id="@+id/addFriend_btn"
         android:layout_width="129dp"
         android:layout_height="53dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="100dp"
         android:onClick="findFriendsActivity"
         android:text="Find Friends"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,8 +23,8 @@
         android:id="@+id/myFriends_btn"
         android:layout_width="129dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="40dp"
         android:onClick="showFriends"
         android:text="My Friends"
         app:layout_constraintStart_toStartOf="parent"
