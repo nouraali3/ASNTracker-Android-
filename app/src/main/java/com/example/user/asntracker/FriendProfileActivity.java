@@ -66,7 +66,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         String url="http://asnasucse18.000webhostapp.com/RFTDA/RemoveConnection.php";
         RequestParams params = new RequestParams();
         params.put("senderID",currentUser.getID());
-        params.put("receiverID",profileOwner.getID());
+        params.put("trackerID",profileOwner.getID());
         client.get(url,params,new JsonHttpResponseHandler()
         {
             @Override

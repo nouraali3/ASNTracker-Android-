@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
 import com.loopj.android.http.AsyncHttpClient;
@@ -24,8 +25,9 @@ public class LoginActivity extends AppCompatActivity {
     String currentUserEmail ;
     String currentUserPassword ;
 
-    EditText emailET;
-    EditText passwordTV;
+    EditText emailET, passwordTV;
+    TextView msgTV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
         emailET = findViewById(R.id.email_et) ;
         passwordTV = findViewById(R.id.password_et);
+        msgTV = findViewById(R.id.msg_tv2);
 
 
     }
@@ -58,24 +61,40 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     if(response.getBoolean("error")==false)
                     {
-                        Driver currentUser = new Driver(response.getInt("ID"),response.getString("email"),response.getString("username"),response.getString("token"),response.getString("phoneNumber"),response.getString("status"));
+                        Log.d("LoginActivity", "onSuccess response is "+response);
+                        Driver currentUser = new Driver(response.getInt("ID"),response.getString("username"),response.getString("email"),response.getString("token"),response.getString("phoneNumber"),response.getString("status"),response.getString("gender"));
                         Log.d("LoginActivity","current user is "+currentUser.toString());
                         Intent i=new Intent(getApplicationContext(),HomeActivity.class);
                         i.putExtra("currentUser",currentUser);
                         startActivity(i);
                     }
+                    else
+                    {
+                        msgTV.setText("Something went wrong");
+                        Log.d("LoginActivity","response is " + response.toString());
+                    }
+
                 }
                 catch (JSONException e)
                 {
                     e.printStackTrace();
+                    Log.d("LoginActivity","response is " + response.toString());
+
                 }
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
+            {
+                msgTV.setText("Failure in your request");
+                Log.d("LoginActivity","response is " + errorResponse.toString());
             }
         });
 
+    }
+
+    public void goToSignupActivity(View v)
+    {
+        startActivity(new Intent(getApplicationContext(),SignUpActivity.class));
     }
 }

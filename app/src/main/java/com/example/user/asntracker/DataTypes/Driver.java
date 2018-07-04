@@ -18,7 +18,7 @@ import cz.msebera.android.httpclient.Header;
 public class Driver implements Serializable
 {
    int ID;
-   String userName,email, password, phonenumber, status, token;
+   String userName,email, password, phonenumber, status, token,gender;
 
     public Driver(int ID, String userName, String email) {
         this.ID = ID;
@@ -37,6 +37,17 @@ public class Driver implements Serializable
         this.token = token;
     }
 
+    public Driver(int ID, String userName, String email, String token, String phonenumber, String status, String gender)
+    {
+        this.ID = ID;
+        this.userName = userName;
+        this.email = email;
+        this.phonenumber = phonenumber;
+        this.status = status;
+        this.token = token;
+        this.gender=gender;
+    }
+
     @Override
     public String toString() {
         return "Driver{" +
@@ -46,6 +57,7 @@ public class Driver implements Serializable
                 ", phonenumber='" + phonenumber + '\'' +
                 ", status='" + status + '\'' +
                 ", token='" + token + '\'' +
+                ", gender='" + gender +
                 '}';
     }
 
@@ -86,31 +98,11 @@ public class Driver implements Serializable
     public String getToken() {return token;}
     public void setToken(String token) {this.token = token;}
 
+    public String getGender() {
+        return gender;
+    }
 
-    public boolean sendConnectionRequestTo(Driver receiver)
-    {
-        AsyncHttpClient httpClient = new SyncHttpClient();
-        RequestParams params = new RequestParams();
-        params.put("senderID",this.getID());
-        params.put("receiverID",receiver.getID());
-        final boolean[] requestSuccess = {false};
-        httpClient.get("https://asnasucse18.000webhostapp.com/RFTDA/AddFriend.php",params, new JsonHttpResponseHandler()
-        {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response)
-            {
-                try {
-                    requestSuccess[0] = response.getBoolean("result");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("Driver class","sendConnectionRequestTo onFailure");
-            }
-        });
-        return requestSuccess[0];
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

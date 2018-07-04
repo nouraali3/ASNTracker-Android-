@@ -59,7 +59,7 @@ public class NonFriendProfileActivity extends AppCompatActivity {
             AsyncHttpClient httpClient = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.put("senderID",currentUser.getID());
-            params.put("receiverID",profileOwner.getID());
+            params.put("trackerID",profileOwner.getID());
             Log.d("NnFriendProfileActivity","senderID "+currentUser.getID()+" receiver ID "+profileOwner.getID());
             final boolean[] requestSuccess = {false};
             httpClient.get("http://asnasucse18.000webhostapp.com/RFTDA/SendFriendRequest.php",params, new JsonHttpResponseHandler()
@@ -84,10 +84,10 @@ public class NonFriendProfileActivity extends AppCompatActivity {
             AsyncHttpClient httpClient = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.put("senderID",currentUser.getID());
-            params.put("receiverID",profileOwner.getID());
+            params.put("trackerID",profileOwner.getID());
             Log.d("NnFriendProfileActivity","senderID "+currentUser.getID()+" receiver ID "+profileOwner.getID());
             final boolean[] requestSuccess = {false};
-            httpClient.get("http://asnasucse18.000webhostapp.com/RFTDA/CancelFriendRequest.php",params, new JsonHttpResponseHandler()
+            httpClient.get("http://asnasucse18.000webhostapp.com/RFTDA/DeleteFriendRequest.php",params, new JsonHttpResponseHandler()
             {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response)

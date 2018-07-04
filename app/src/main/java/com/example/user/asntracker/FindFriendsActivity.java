@@ -26,7 +26,6 @@ public class FindFriendsActivity extends AppCompatActivity {
     TextView resultTextView;
     ProgressBar progressBar;
     static String driverEmail;
-    DriverUtils driverUtils;
     static Driver matchedDriver;
     static Driver currentDriver;
 
@@ -40,9 +39,6 @@ public class FindFriendsActivity extends AppCompatActivity {
         setViews();
         progressBar.setVisibility(View.GONE);
         Log.d("FindFriendsActivity","onCreate ");
-
-        driverUtils = new DriverUtils(getApplicationContext());
-
 
     }
 
@@ -64,7 +60,7 @@ public class FindFriendsActivity extends AppCompatActivity {
         RequestParams parameters= new RequestParams();
         parameters.put("email",driverEmail);
 
-        httpClient.get("http://asnasucse18.000webhostapp.com/RFTDA/FetchDrivers.php",parameters,new JsonHttpResponseHandler() {
+        httpClient.get("http://asnasucse18.000webhostapp.com/RFTDA/FetchDriver.php",parameters,new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

@@ -51,13 +51,15 @@
         <activity android:name=".FriendProfileActivity" />
         <activity android:name=".FriendsListActivity" />
         <activity android:name=".LoginActivity">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ConnectionRequestsActivity" />
+        <activity android:name=".ConnectionSenderProfileActivity"></activity>
     </application>
 
 </manifest>

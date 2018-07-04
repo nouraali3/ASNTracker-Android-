@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
 import com.example.user.asntracker.DataTypes.NonDriver;
@@ -13,14 +14,36 @@ public class HomeActivity extends AppCompatActivity {
 
     private static Driver currentUser;
 
+    TextView currentUsernameTV, emailTV, phoneTV, currentUsernameTV2,genderTV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         currentUser = (Driver) getIntent().getSerializableExtra("currentUser");
+
+        setViews();
     }
 
-   public void showFriends(View v)
+    //TODO: display profile picture, gender
+    private void setViews()
+    {
+        currentUsernameTV = findViewById(R.id.current_user_name_tv);
+        emailTV = findViewById(R.id.email_tv3);
+        phoneTV = findViewById(R.id.phone_tv1);
+        currentUsernameTV2 = findViewById(R.id.current_user_name_tv2);
+        genderTV = findViewById(R.id.gender_tv);
+
+        currentUsernameTV.setText(currentUser.getUserName());
+        emailTV.setText(currentUser.getEmail());
+        phoneTV.setText(currentUser.getPhonenumber());
+        currentUsernameTV2.setText(currentUser.getUserName());
+        genderTV.setText(currentUser.getGender());
+
+    }
+
+
+    public void showFriends(View v)
    {
        Intent i= new Intent(getApplicationContext(),FriendsListActivity.class);
        i.putExtra("currentUser",currentUser);
@@ -28,12 +51,16 @@ public class HomeActivity extends AppCompatActivity {
    }
 
     public void findFriendsActivity(View v)
-    {startFindFriendsIntent();}
-
-    private void startFindFriendsIntent()
     {
         Intent i=new Intent(getApplicationContext(),FindFriendsActivity.class);
         i.putExtra("currentUser",currentUser);
+        startActivity(i);
+    }
+
+    public void checkRequests(View v)
+    {
+        Intent i=new Intent(getApplicationContext(),ConnectionRequestsActivity.class);
+        i.putExtra("currentUserID",currentUser.getID());
         startActivity(i);
     }
 }

@@ -47,7 +47,7 @@ public class FriendsListActivity extends AppCompatActivity {
 
 
         AsyncHttpClient client = new AsyncHttpClient();
-        String url ="http://asnasucse18.000webhostapp.com/RFTDA/DisplayConnections.php";
+        String url ="http://asnasucse18.000webhostapp.com/RFTDA/FetchTrackedPeople.php";
         RequestParams params = new RequestParams();
         params.put("currentUserID", currentUSer.getID());
         client.get(url,params, new JsonHttpResponseHandler()
