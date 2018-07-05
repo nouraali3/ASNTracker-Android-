@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
 import com.example.user.asntracker.DataTypes.NonDriver;
+import com.example.user.asntracker.DataTypes.Tracker;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static Driver currentUser;
+    private static Tracker currentUser;
 
     TextView currentUsernameTV, emailTV, phoneTV, currentUsernameTV2,genderTV;
 
@@ -20,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        currentUser = (Driver) getIntent().getSerializableExtra("currentUser");
+        currentUser = (Tracker) getIntent().getSerializableExtra("currentUser");
 
         setViews();
     }
@@ -60,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     public void checkRequests(View v)
     {
         Intent i=new Intent(getApplicationContext(),ConnectionRequestsActivity.class);
-        i.putExtra("currentUserID",currentUser.getID());
+        i.putExtra("currentUser",currentUser);
         startActivity(i);
     }
 }

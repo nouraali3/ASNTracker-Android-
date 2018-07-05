@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
-import com.example.user.asntracker.DatabaseOperations.DriverUtils;
+import com.example.user.asntracker.DataTypes.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -27,14 +27,14 @@ public class FindFriendsActivity extends AppCompatActivity {
     ProgressBar progressBar;
     static String driverEmail;
     static Driver matchedDriver;
-    static Driver currentDriver;
+    static Tracker currentTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_friends);
 
-        currentDriver= (Driver) getIntent().getSerializableExtra("currentUser");
+        currentTracker = (Tracker) getIntent().getSerializableExtra("currentUser");
 
         setViews();
         progressBar.setVisibility(View.GONE);
@@ -112,11 +112,13 @@ public class FindFriendsActivity extends AppCompatActivity {
     public void DisplayDriverProfile(View view)
     {
 
+        //TODO: check if the driver is already a connection =>  remove add button addButton.setVisibility(VISIBLE.GONE);
+        //TODO: check if a request is previously sent to this driver => addButton.setText("Cancel Request");
         //TODO: least important: check first if they are connected => display FriendProfileActivity , else=> display NonFriendActivity
-        Intent driverProfileIntent = new Intent(getApplicationContext(),NonFriendProfileActivity.class);
-        driverProfileIntent.putExtra("matchedDriver", matchedDriver);
-        driverProfileIntent.putExtra("currentUser", currentDriver);
-        startActivity(driverProfileIntent);
+        Intent i = new Intent(getApplicationContext(),NonFriendProfileActivity.class);
+        i.putExtra("matchedDriver", matchedDriver);
+        i.putExtra("currentUser", currentTracker);
+        startActivity(i);
     }
 
 }

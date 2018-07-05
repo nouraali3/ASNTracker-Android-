@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
+import com.example.user.asntracker.DataTypes.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -21,7 +22,7 @@ import cz.msebera.android.httpclient.Header;
 public class NonFriendProfileActivity extends AppCompatActivity {
 
 
-    static Driver currentUser;
+    static Tracker currentUser;
     static Driver profileOwner;
     Button addButton;
     boolean cancel=false;
@@ -32,12 +33,11 @@ public class NonFriendProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_non_friend_profile);
 
         profileOwner= (Driver) getIntent().getSerializableExtra("matchedDriver");
-        currentUser = (Driver) getIntent().getSerializableExtra("currentUser");
+        currentUser = (Tracker) getIntent().getSerializableExtra("currentUser");
 
         displayDriverInformation(profileOwner);
 
-        //TODO: check if the driver is already a connection =>  remove add button addButton.setVisibility(VISIBLE.GONE);
-        //TODO: check if a request is previously sent to this driver => addButton.setText("Cancel Request");
+
     }
 
     private void displayDriverInformation(Driver driver)
@@ -59,7 +59,7 @@ public class NonFriendProfileActivity extends AppCompatActivity {
             AsyncHttpClient httpClient = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.put("senderID",currentUser.getID());
-            params.put("trackerID",profileOwner.getID());
+            params.put("receiverID",profileOwner.getID());
             Log.d("NnFriendProfileActivity","senderID "+currentUser.getID()+" receiver ID "+profileOwner.getID());
             final boolean[] requestSuccess = {false};
             httpClient.get("http://asnasucse18.000webhostapp.com/RFTDA/SendFriendRequest.php",params, new JsonHttpResponseHandler()
@@ -84,7 +84,7 @@ public class NonFriendProfileActivity extends AppCompatActivity {
             AsyncHttpClient httpClient = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.put("senderID",currentUser.getID());
-            params.put("trackerID",profileOwner.getID());
+            params.put("receiverID",profileOwner.getID());
             Log.d("NnFriendProfileActivity","senderID "+currentUser.getID()+" receiver ID "+profileOwner.getID());
             final boolean[] requestSuccess = {false};
             httpClient.get("http://asnasucse18.000webhostapp.com/RFTDA/DeleteFriendRequest.php",params, new JsonHttpResponseHandler()
@@ -93,7 +93,7 @@ public class NonFriendProfileActivity extends AppCompatActivity {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response)
                 {
                     addButton =(Button) findViewById(R.id.add_btn);
-                    addButton.setText("ADD");
+                    addButton.setText("Add");
                     cancel=false;
                     Log.d("NnFriendProfileActivity","addFriend connection request is sent successfuly");
                 }

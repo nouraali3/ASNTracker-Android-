@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.asntracker.DataTypes.Driver;
+import com.example.user.asntracker.DataTypes.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -23,7 +24,7 @@ import cz.msebera.android.httpclient.Header;
 public class FriendProfileActivity extends AppCompatActivity {
 
     Driver profileOwner;
-    Driver currentUser;
+    Tracker currentUser;
 
 
     @Override
@@ -32,7 +33,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_profile);
 
         profileOwner = (Driver) getIntent().getSerializableExtra("clickedFriend");
-        currentUser = (Driver) getIntent().getSerializableExtra("currentUser");
+        currentUser = (Tracker) getIntent().getSerializableExtra("currentUser");
         displayFriendInfo(profileOwner);
 
     }
@@ -66,7 +67,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         String url="http://asnasucse18.000webhostapp.com/RFTDA/RemoveConnection.php";
         RequestParams params = new RequestParams();
         params.put("senderID",currentUser.getID());
-        params.put("trackerID",profileOwner.getID());
+        params.put("receiverID",profileOwner.getID());
         client.get(url,params,new JsonHttpResponseHandler()
         {
             @Override

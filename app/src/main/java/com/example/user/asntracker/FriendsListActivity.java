@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
+import com.example.user.asntracker.DataTypes.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -25,7 +26,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class FriendsListActivity extends AppCompatActivity {
 
-    Driver currentUSer;
+    Tracker currentUSer;
     static TextView msgTV;
     ArrayAdapter<String> adapter;
     List<Driver> currentConnections;
@@ -35,7 +36,7 @@ public class FriendsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
 
-        currentUSer = (Driver) getIntent().getSerializableExtra("currentUser");
+        currentUSer = (Tracker) getIntent().getSerializableExtra("currentUser");
         msgTV = findViewById(R.id.msg_tv);
 
         currentConnections= new ArrayList<>();

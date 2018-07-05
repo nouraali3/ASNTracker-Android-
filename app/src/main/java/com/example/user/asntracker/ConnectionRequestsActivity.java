@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
+import com.example.user.asntracker.DataTypes.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -28,6 +29,7 @@ public class ConnectionRequestsActivity extends AppCompatActivity
     static TextView msgTV;
     List<Driver> senders;
     ArrayAdapter<String> adapter;
+    Tracker currentTracker;
     int currentTrackerID;
 
     @Override
@@ -38,7 +40,8 @@ public class ConnectionRequestsActivity extends AppCompatActivity
         msgTV = findViewById(R.id.msg_tv);
 
         //  ====>>>>> currentDriver is the receiver
-        currentTrackerID =  getIntent().getIntExtra("currentUserID",0);
+        currentTracker = (Tracker) getIntent().getSerializableExtra("currentUser");
+        currentTrackerID = currentTracker.getID();
         senders = new ArrayList<>();
 
         ListView lv = (ListView)this.findViewById(R.id.connectionRequests_ListView);
@@ -51,7 +54,7 @@ public class ConnectionRequestsActivity extends AppCompatActivity
         String url = "http://asnasucse18.000webhostapp.com/RFTDA/SeeRequestsToTracker.php";
         RequestParams params = new RequestParams();
         Log.d("ConnectionRequests","current user ID "+ currentTrackerID);
-        params.put("trackerID",currentTrackerID);
+        params.put("receiverID",currentTrackerID);
         client.get(url,params, new JsonHttpResponseHandler()
         {
             @Override
@@ -83,7 +86,7 @@ public class ConnectionRequestsActivity extends AppCompatActivity
             {
                 Intent intent= new Intent(getApplicationContext(),ConnectionSenderProfileActivity.class);
                 intent.putExtra("profileOwner",senders.get(i));
-                intent.putExtra("trackerID", currentTrackerID);
+                intent.putExtra("currentUser", currentTracker);
                 startActivity(intent);
             }
         });
@@ -98,7 +101,7 @@ public class ConnectionRequestsActivity extends AppCompatActivity
             adapter.clear();
             for (int i=0;i<requestsNumber;i++)
             {
-                String key = "profileOwner"+Integer.toString(i+1);
+                String key = "sender"+Integer.toString(i+1);
                 int senderID = response.getJSONObject("result").getJSONObject(key).getInt("senderID");
                 String senderUsername = response.getJSONObject("result").getJSONObject(key).getString("senderUsername");
                 String senderEmail = response.getJSONObject("result").getJSONObject(key).getString("senderEmail");
@@ -118,10 +121,10 @@ public class ConnectionRequestsActivity extends AppCompatActivity
     }
 
     //TODO:- add back button to Connections requests activity
-    public void goToDriverMapActivity(View v)
+    public void goToHomeActivity(View v)
     {
         Intent i = new Intent(getApplicationContext(),HomeActivity.class);
-        i.putExtra("driverID", currentTrackerID);
+        i.putExtra("currentUser", currentTracker);
         startActivity(i);
     }
 

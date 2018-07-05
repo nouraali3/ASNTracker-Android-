@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.user.asntracker.DataTypes.Driver;
+import com.example.user.asntracker.DataTypes.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.getBoolean("error")==false)
                     {
                         Log.d("LoginActivity", "onSuccess response is "+response);
-                        Driver currentUser = new Driver(response.getInt("ID"),response.getString("username"),response.getString("email"),response.getString("token"),response.getString("phoneNumber"),response.getString("status"),response.getString("gender"));
+                        Tracker currentUser = new Tracker(response.getInt("ID"),response.getString("username"),response.getString("phoneNumber"),response.getString("status"),response.getString("gender"),response.getString("email"));
                         Log.d("LoginActivity","current user is "+currentUser.toString());
                         Intent i=new Intent(getApplicationContext(),HomeActivity.class);
                         i.putExtra("currentUser",currentUser);

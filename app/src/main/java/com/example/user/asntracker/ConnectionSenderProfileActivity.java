@@ -24,6 +24,7 @@ import cz.msebera.android.httpclient.Header;
 public class ConnectionSenderProfileActivity extends AppCompatActivity {
 
     static Driver profileOwner;
+    Tracker currentTracker;
     static int trackerID;
 
     @Override
@@ -31,10 +32,11 @@ public class ConnectionSenderProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection_sender_profile);
 
-        if(getIntent().hasExtra("trackerID") && getIntent().hasExtra("profileOwner"))
+        if(getIntent().hasExtra("profileOwner") && getIntent().hasExtra("currentUser"))
         {
             profileOwner = (Driver) getIntent().getSerializableExtra("profileOwner");
-            trackerID = getIntent().getIntExtra("trackerID",0);
+            currentTracker = (Tracker) getIntent().getSerializableExtra("currentUser");
+            trackerID = currentTracker.getID();
         }
         else
             Log.d("ConnectSenderActivity","No profileOwner or receiverId were received from the intent");
@@ -126,7 +128,7 @@ public class ConnectionSenderProfileActivity extends AppCompatActivity {
     public void goToPrevActivity(View v)
     {
         Intent i = new Intent(getApplicationContext(),ConnectionRequestsActivity.class);
-        i.putExtra("currentUserID", trackerID);
+        i.putExtra("currentUser", currentTracker);
         startActivity(i);
     }
 }
