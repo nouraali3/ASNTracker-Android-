@@ -108,17 +108,181 @@ public class FindFriendsActivity extends AppCompatActivity {
         return driver;
     }
 
-    //when a matchedDriver is selected
     public void DisplayDriverProfile(View view)
     {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url ="http://asnasucse18.000webhostapp.com/RFTDA/FetchTrackedPeople.php";
+        RequestParams params = new RequestParams();
+        params.put("currentUserID", currentTracker.getID());
+        client.get(url,params, new JsonHttpResponseHandler()
+        {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try
+                {
+                    if(isConnection(response))
+                    {
+                        Intent i = new Intent(getApplicationContext(),FriendProfileActivity.class);
+                        i.putExtra("currentUser", currentTracker);
+                        i.putExtra("clickedFriend",matchedDriver );
 
-        //TODO: check if the driver is already a connection =>  remove add button addButton.setVisibility(VISIBLE.GONE);
-        //TODO: check if a request is previously sent to this driver => addButton.setText("Cancel Request");
-        //TODO: least important: check first if they are connected => display FriendProfileActivity , else=> display NonFriendActivity
-        Intent i = new Intent(getApplicationContext(),NonFriendProfileActivity.class);
-        i.putExtra("matchedDriver", matchedDriver);
-        i.putExtra("currentUser", currentTracker);
-        startActivity(i);
+                        startActivity(i);
+                    }
+
+                    else
+                    {
+                        //ashof hal mab3otly mn el matched driver 7aga (current tracker is receiver??)
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        String url = "http://asnasucse18.000webhostapp.com/RFTDA/SeeRequestsToTracker.php";
+                        RequestParams params = new RequestParams();
+                        Log.d("FindFriendsActivity","current user ID "+currentTracker.getID());
+                        params.put("receiverID",currentTracker.getID());
+                        client.get(url,params, new JsonHttpResponseHandler()
+                        {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response1) {
+                                try
+                                {
+                                    if(friendRequestPreviouslySentToTracker(response1))
+                                    {
+                                        Log.d("FindFriendsActivity","request previously sent To tracker");
+                                        Intent i = new Intent(getApplicationContext(),ConnectionSenderProfileActivity.class);
+                                        i.putExtra("profileOwner", matchedDriver);
+                                        i.putExtra("currentUser",currentTracker);
+
+                                        startActivity(i);
+                                    }
+                                    else
+                                    {
+                                        //hashof hal ana ba3at ll driver da abl keda, hal ana ba3talo 7aga
+                                        AsyncHttpClient client = new AsyncHttpClient();
+                                        String url = "http://asnasucse18.000webhostapp.com/RFTDA/SeeRequests.php";
+                                        RequestParams params = new RequestParams();
+                                        Log.d("FindFriendsActivity","current user ID "+currentTracker.getID());
+                                        params.put("receiverID",matchedDriver.getID());
+                                        client.get(url,params, new JsonHttpResponseHandler()
+                                        {
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, JSONObject response2)
+                                            {
+                                                try {
+                                                    if(friendRequestPreviouslySentToDriver(response2))
+                                                    {
+                                                        Log.d("FindFriendsActivity","request previously sent to Driver");
+                                                        Intent i = new Intent(getApplicationContext(),NonFriendProfileActivity.class);
+                                                        i.putExtra("matchedDriver", matchedDriver);
+                                                        i.putExtra("currentUser", currentTracker);
+                                                        i.putExtra("cancel",true);
+                                                        startActivity(i);
+                                                    }
+                                                    else
+                                                    {
+                                                        Intent i = new Intent(getApplicationContext(),NonFriendProfileActivity.class);
+                                                        i.putExtra("matchedDriver", matchedDriver);
+                                                        i.putExtra("currentUser", currentTracker);
+                                                        startActivity(i);
+                                                    }
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
+                                            {
+                                            }
+                                        });
+
+                                    }
+                                }
+                                catch (JSONException e)
+                                {
+                                    Log.d("FindFriendsActivity","onSuccess json error2");
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                Log.d("FindFriendsActivity","onFailure");
+                            }
+                        });
+
+                    }
+                }
+                catch (JSONException e)
+                {
+                    Log.d("FindFriendsActivity","onSuccess json error1");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("FindFriendsActivity","onFailure");
+            }
+        });
+
+
     }
 
+    private boolean isConnection(JSONObject response) throws JSONException {
+        Log.d("FindFriendsActivity","handleResponse response is "+response);
+        int trackersNumber = response.getJSONObject("connections").getInt("ConnectionsNumber");
+        if(trackersNumber == 0)
+            return false;
+        else
+        {
+            for (int i=0;i<trackersNumber;i++)
+            {
+                String key = "friend"+Integer.toString(i+1);
+                String friendEmail = response.getJSONObject("connections").getJSONObject(key).getString("friendEmail");
+
+                if(matchedDriver.getEmail().equals(friendEmail))
+                    return true;
+                Log.d("FindFriendsActivity","isConnection ");
+            }
+        }
+        return false;
+
+    }
+
+    private boolean friendRequestPreviouslySentToTracker(JSONObject response)throws JSONException
+    {
+        int requestsNumber = response.getJSONObject("result").getInt("ConnectionRequestsNumber");
+        if(requestsNumber == 0)
+            return false;
+        for (int i=0;i<requestsNumber;i++)
+        {
+            String key = "sender"+Integer.toString(i+1);
+            String senderEmail = response.getJSONObject("result").getJSONObject(key).getString("senderEmail");
+            if(matchedDriver.getEmail().equals(senderEmail))
+            {
+
+                Log.d("FindFriendsActivity","request previously sent To Tracker ");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean friendRequestPreviouslySentToDriver(JSONObject response)throws JSONException
+    {
+        int requestsNumber = response.getJSONObject("result").getInt("ConnectionRequestsNumber");
+        if(requestsNumber == 0)
+            return false;
+        for (int i=0;i<requestsNumber;i++)
+        {
+            String key = "sender"+Integer.toString(i+1);
+            String senderEmail = response.getJSONObject("result").getJSONObject(key).getString("senderEmail");
+            if(currentTracker.getEmail().equals(senderEmail))
+            {
+                Log.d("FindFriendsActivity","request previously sent to Driver");
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -25,23 +25,31 @@ public class NonFriendProfileActivity extends AppCompatActivity {
     static Tracker currentUser;
     static Driver profileOwner;
     Button addButton;
-    boolean cancel=false;
+    boolean cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_friend_profile);
 
-        profileOwner= (Driver) getIntent().getSerializableExtra("matchedDriver");
-        currentUser = (Tracker) getIntent().getSerializableExtra("currentUser");
+        if(getIntent().hasExtra("matchedDriver") && getIntent().hasExtra("currentUser"))
+        {
+            profileOwner= (Driver) getIntent().getSerializableExtra("matchedDriver");
+            currentUser = (Tracker) getIntent().getSerializableExtra("currentUser");
+        }
 
-        displayDriverInformation(profileOwner);
+        cancel = getIntent().getBooleanExtra("cancel",false);
+        setViews(profileOwner);
+        if(cancel==true)
+            addButton.setText("Cancel Request");
+
 
 
     }
 
-    private void displayDriverInformation(Driver driver)
+    private void setViews(Driver driver)
     {
+        addButton =(Button) findViewById(R.id.add_btn);
         TextView nonFriendNameTV = findViewById(R.id.nonFriendName_tv);
         nonFriendNameTV.setText(profileOwner.getUserName());
         TextView nameTV = findViewById(R.id.name2_tv);
@@ -67,7 +75,6 @@ public class NonFriendProfileActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response)
                 {
-                    addButton =(Button) findViewById(R.id.add_btn);
                     addButton.setText("Cancel Request");
                     cancel=true;
                     Log.d("NnFriendProfileActivity","addFriend connection request is sent successfuly");
@@ -92,7 +99,6 @@ public class NonFriendProfileActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response)
                 {
-                    addButton =(Button) findViewById(R.id.add_btn);
                     addButton.setText("Add");
                     cancel=false;
                     Log.d("NnFriendProfileActivity","addFriend connection request is sent successfuly");
