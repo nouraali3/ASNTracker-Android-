@@ -111,7 +111,7 @@ public class ConnectionRequestsActivity extends AppCompatActivity
 
 
                 Driver sender =new Driver(senderID,senderUsername,senderEmail,senderToken,senderPhonenumber,senderStatus);
-                adapter.add(senderUsername);
+                adapter.add((i+1)+"- "+senderUsername);
                 Log.d("ConnectionRequests","handleResponse profileOwner is "+sender.toString());
                 senders.add(sender);
 

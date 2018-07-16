@@ -80,7 +80,6 @@ public class FriendsListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 Intent intent= new Intent(getApplicationContext(),FriendProfileActivity.class);
-                //TODO: pass friend object
                 intent.putExtra("clickedFriend",currentConnections.get(i));
                 intent.putExtra("currentUser",currentUSer);
                 startActivity(intent);
@@ -106,7 +105,7 @@ public class FriendsListActivity extends AppCompatActivity {
                 String friendPhonenumber = response.getJSONObject("connections").getJSONObject(key).getString("friendPhonenumber");
                 String friendStatus = response.getJSONObject("connections").getJSONObject(key).getString("friendStatus");
                 Driver friend =new Driver(friendID,friendUsername,friendEmail,friendToken,friendPhonenumber,friendStatus);
-                adapter.add(friendUsername);
+                adapter.add((i+1)+"- "+friendUsername);
                 Log.d("ConnectionRequests","handleResponse friend is "+friend.toString());
                 currentConnections.add(friend);
 

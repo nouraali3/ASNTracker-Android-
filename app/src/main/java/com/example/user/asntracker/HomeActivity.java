@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.user.asntracker.DataTypes.Driver;
-import com.example.user.asntracker.DataTypes.NonDriver;
 import com.example.user.asntracker.DataTypes.Tracker;
 
 public class HomeActivity extends AppCompatActivity {
@@ -16,17 +14,23 @@ public class HomeActivity extends AppCompatActivity {
     private static Tracker currentUser;
 
     TextView currentUsernameTV, emailTV, phoneTV, currentUsernameTV2,genderTV;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         currentUser = (Tracker) getIntent().getSerializableExtra("currentUser");
+
+
+
+
 
         setViews();
     }
 
-    //TODO: display profile picture, gender
+    //TODO: display profile picture
     private void setViews()
     {
         currentUsernameTV = findViewById(R.id.current_user_name_tv);
@@ -34,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         phoneTV = findViewById(R.id.phone_tv1);
         currentUsernameTV2 = findViewById(R.id.current_user_name_tv2);
         genderTV = findViewById(R.id.gender_tv);
+
 
         currentUsernameTV.setText(currentUser.getUserName());
         emailTV.setText(currentUser.getEmail());

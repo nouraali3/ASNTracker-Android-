@@ -47,9 +47,11 @@ public class ConnectionSenderProfileActivity extends AppCompatActivity {
 
     private void displaySenderInformation()
     {
-        TextView senderInfoTV= this.findViewById(R.id.senderInfo_tv);
+        TextView nameTV = findViewById(R.id.name3_tv);
+        TextView emailTV= findViewById(R.id.email3_tv);
+        nameTV.setText(profileOwner.getUserName());
+        emailTV.setText(profileOwner.getEmail());
         TextView connectionSenderNameTV = findViewById(R.id.connectionSenderName_tv);
-        senderInfoTV.setText(profileOwner.toString());
         connectionSenderNameTV.setText(profileOwner.getUserName());
     }
 
