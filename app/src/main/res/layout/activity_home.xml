@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,179 +7,24 @@
     android:background="@drawable/background"
     tools:context="com.example.user.asntracker.HomeActivity">
 
-    <TextView
-        android:id="@+id/current_user_name_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="lll"
-        android:textAlignment="center"
-        android:textColor="#FFB5473F "
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:itemBackground="@color/lightOrange"
+        app:menu="@menu/nav_items"
+        android:id="@+id/main_nav"></android.support.design.widget.BottomNavigationView>
+
+    <FrameLayout
+        android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/main_nav"></FrameLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/current_tracker_pp_iv"
-                android:layout_width="match_parent"
-                android:layout_height="181dp"
-                app:srcCompat="@android:color/transparent"
-                tools:layout_editor_absoluteX="157dp"
-                tools:layout_editor_absoluteY="298dp" />
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="144dp" />
-
-                    <TextView
-                        android:id="@+id/current_user_name_tv2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Mobile"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="177dp" />
-
-                    <TextView
-                        android:id="@+id/phone_tv1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="144dp" />
-
-                    <TextView
-                        android:id="@+id/email_tv3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Gender"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="218dp" />
-
-                    <TextView
-                        android:id="@+id/gender_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
-                </TableRow>
-
-            </TableLayout>
-
-            <Button
-                android:id="@+id/addFriend_btn"
-                android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:background="@drawable/button_border"
-                android:onClick="findFriendsActivity"
-                android:text="Find Friends"
-                android:textAllCaps="false"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="428dp" />
-
-            <Button
-                android:id="@+id/requests_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_border"
-                android:onClick="checkRequests"
-                android:text="Requests"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/myFriends_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_border"
-                android:onClick="showFriends"
-                android:text="My Friends"
-                android:textAllCaps="false"
-                tools:layout_editor_absoluteX="152dp"
-                tools:layout_editor_absoluteY="432dp" />
-
-            <Button
-                android:id="@+id/addFriend_btn2"
-                android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:background="@drawable/button_border"
-                android:onClick="findFriendsActivity"
-                android:text="Edit Profile"
-                android:textAllCaps="false"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="428dp" />
-
-
-            <!--<ListView-->
-                <!--android:id="@+id/android:list"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:layout_alignParentTop="true" />-->
-        </LinearLayout>
-
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

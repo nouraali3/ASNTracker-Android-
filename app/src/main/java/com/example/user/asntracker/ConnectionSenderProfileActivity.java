@@ -127,11 +127,5 @@ public class ConnectionSenderProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void goToPrevActivity(View v)
-    {
-        Intent i = new Intent(getApplicationContext(),ConnectionRequestsActivity.class);
-        i.putExtra("currentUser", currentTracker);
-        startActivity(i);
-    }
 }
 

@@ -1,6 +1,9 @@
 package com.example.user.asntracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -45,57 +48,78 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login (View v)
     {
-        currentUserEmail = emailET.getText().toString().trim();
-        currentUserPassword = passwordTV.getText().toString().trim();
-        Log.d("LoginActivity","email is "+currentUserEmail+" password is "+currentUserPassword);
-        AsyncHttpClient client = new AsyncHttpClient();
-        String url= "http://asnasucse18.000webhostapp.com/RFTDA/Login.php";
-        RequestParams params = new RequestParams();
-        params.put("email",currentUserEmail);
-        params.put("password",currentUserPassword);
-        client.get(url,params, new JsonHttpResponseHandler()
+        findViewById(R.id.login_btn).setBackground(getResources().getDrawable(R.drawable.btn_clicked));
+        if(!connected())
         {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response)
+            msgTV.setText("No internet connection");
+        }
+        else
+        {
+            currentUserEmail = emailET.getText().toString().trim();
+            currentUserPassword = passwordTV.getText().toString().trim();
+            Log.d("LoginActivity","email is "+currentUserEmail+" password is "+currentUserPassword);
+            AsyncHttpClient client = new AsyncHttpClient();
+            String url= "http://asnasucse18.000webhostapp.com/RFTDA/Login.php";
+            RequestParams params = new RequestParams();
+            params.put("email",currentUserEmail);
+            params.put("password",currentUserPassword);
+            client.get(url,params, new JsonHttpResponseHandler()
             {
-                try
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response)
                 {
-                    if(response.getBoolean("error")==false)
+                    findViewById(R.id.login_btn).setBackground(getResources().getDrawable(R.drawable.button_border));
+                    try
                     {
-                        Log.d("LoginActivity", "onSuccess response is "+response);
-                        Tracker currentUser = new Tracker(response.getInt("ID"),response.getString("username"),response.getString("phoneNumber"),response.getString("status"),response.getString("gender"),response.getString("email"));
-                        Log.d("LoginActivity","current user is "+currentUser.toString());
-                        Intent i=new Intent(getApplicationContext(),HomeActivity.class);
-                        i.putExtra("currentUser",currentUser);
-                        startActivity(i);
+                        if(response.getBoolean("error")==false)
+                        {
+                            Log.d("LoginActivity", "onSuccess response is "+response);
+                            Tracker currentUser = new Tracker(response.getInt("ID"),response.getString("username"),response.getString("phoneNumber"),response.getString("status"),response.getString("gender"),response.getString("email"));
+                            Log.d("LoginActivity","current user is "+currentUser.toString());
+                            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+                            i.putExtra("currentUser",currentUser);
+                            startActivity(i);
+                        }
+                        else
+                        {
+                            msgTV.setText("wrong email or password");
+                            Log.d("LoginActivity","response is " + response.toString());
+                        }
+
                     }
-                    else
+                    catch (JSONException e)
                     {
-                        msgTV.setText("Something went wrong");
+                        e.printStackTrace();
                         Log.d("LoginActivity","response is " + response.toString());
+
                     }
-
                 }
-                catch (JSONException e)
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
                 {
-                    e.printStackTrace();
-                    Log.d("LoginActivity","response is " + response.toString());
-
+                    findViewById(R.id.login_btn).setBackground(getResources().getDrawable(R.drawable.button_border));
+                    msgTV.setText("Error in connecting with server");
+                    Log.d("LoginActivity","response is " + errorResponse);
                 }
-            }
+            });
+        }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
-            {
-                msgTV.setText("Failure in your request");
-                Log.d("LoginActivity","response is " + errorResponse.toString());
-            }
-        });
 
     }
 
     public void goToSignupActivity(View v)
     {
         startActivity(new Intent(getApplicationContext(),SignUpActivity.class));
+    }
+
+    private boolean connected()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo1 = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo networkInfo2 = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if(networkInfo1.isConnected() || networkInfo2.isConnected())
+            return true;
+        return false;
     }
 }

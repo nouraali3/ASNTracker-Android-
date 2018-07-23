@@ -1,11 +1,14 @@
 package com.example.user.asntracker;
 
-import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.example.user.asntracker.DataTypes.Tracker;
 
@@ -13,8 +16,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private static Tracker currentUser;
 
-    TextView currentUsernameTV, emailTV, phoneTV, currentUsernameTV2,genderTV;
-    ListView lv;
+    private BottomNavigationView mMainNav;
+    private FrameLayout mMainFrame;
+
+    private Fragment homeFragment , requestFragment , findFriendsFragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,51 +29,53 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         currentUser = (Tracker) getIntent().getSerializableExtra("currentUser");
+        homeFragment = HomeFragment.newInstance(currentUser);
+        requestFragment = RequestsFragment.newInstance(currentUser);
+        findFriendsFragment = FindFriendsFragment.newInstance(currentUser);
+
+        setFragment(homeFragment);
+
+        mMainFrame = findViewById(R.id.main_frame);
+        mMainNav = findViewById(R.id.main_nav);
 
 
+        mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId())
+                {
+                    case R.id.nav_home:
+                        setFragment(homeFragment);
+                        return true;
+
+                    case R.id.nav_requests:
+                        setFragment(requestFragment);
+                        return true;
+
+                    case R.id.nav_search:
+                        setFragment(findFriendsFragment);
+                        return true;
+
+                    default:
+                        return false;
+                }
 
 
-
-        setViews();
+            }
+        });
     }
 
-    //TODO: display profile picture
-    private void setViews()
+
+    public void setFragment(Fragment fragment)
     {
-        currentUsernameTV = findViewById(R.id.current_user_name_tv);
-        emailTV = findViewById(R.id.email_tv3);
-        phoneTV = findViewById(R.id.phone_tv1);
-        currentUsernameTV2 = findViewById(R.id.current_user_name_tv2);
-        genderTV = findViewById(R.id.gender_tv);
+        Bundle args = new Bundle();
+        args.putSerializable("currentUser",currentUser);
+        fragment.setArguments(args);
 
-
-        currentUsernameTV.setText(currentUser.getUserName());
-        emailTV.setText(currentUser.getEmail());
-        phoneTV.setText(currentUser.getPhonenumber());
-        currentUsernameTV2.setText(currentUser.getUserName());
-        genderTV.setText(currentUser.getGender());
-
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame,fragment);
+        fragmentTransaction.commit();
     }
 
-
-    public void showFriends(View v)
-   {
-       Intent i= new Intent(getApplicationContext(),FriendsListActivity.class);
-       i.putExtra("currentUser",currentUser);
-       startActivity(i);
-   }
-
-    public void findFriendsActivity(View v)
-    {
-        Intent i=new Intent(getApplicationContext(),FindFriendsActivity.class);
-        i.putExtra("currentUser",currentUser);
-        startActivity(i);
-    }
-
-    public void checkRequests(View v)
-    {
-        Intent i=new Intent(getApplicationContext(),ConnectionRequestsActivity.class);
-        i.putExtra("currentUser",currentUser);
-        startActivity(i);
-    }
 }

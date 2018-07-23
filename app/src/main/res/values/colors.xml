@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#f9dab3</color>
     <color name="colorAccent">#e4e6f6</color>
     <color name="darkOrange">#5c1a06</color>
+    <color name="lightOrange">#FFF7EDE0</color>
+    <color name="btn_clicked">#d1a75a</color>
 </resources>
